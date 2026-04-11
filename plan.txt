@@ -1,0 +1,55 @@
+Document Parser - Parsing Strategy
+=====================================
+ 
+Goal: Convert a flat char* string into a char**** (document) structure.
+ 
+Data Structure Hierarchy
+-------------------------
+char*    = a word          (e.g. "Learning")
+char**   = a sentence      (collection of words)
+char***  = a paragraph     (collection of sentences)
+char**** = a document      (collection of paragraphs)
+ 
+Delimiters
+-----------
+- Space " "  separates words within a sentence
+- Period "." separates sentences within a paragraph
+- Newline "\n" separates paragraphs within the document
+- End of string marks the end of the last paragraph (no trailing \n)
+ 
+Parsing Steps
+--------------
+1. Parse the flat input string character by character.
+ 
+2. Extract words:
+   - Read characters until a space or period is hit.
+   - Allocate memory (malloc) for the word.
+   - Copy the characters into the new allocation (strncpy).
+   - Store the char* in the current sentence (char**).
+ 
+3. Extract sentences:
+   - A sentence ends when a period "." is encountered.
+   - Collect all words into a dynamically allocated char**.
+   - Store the char** in the current paragraph (char***).
+ 
+4. Extract paragraphs:
+   - A paragraph ends when a newline "\n" is encountered.
+   - Collect all sentences into a dynamically allocated char***.
+   - Store the char*** in the document (char****).
+ 
+5. End of document:
+   - The last paragraph has no trailing "\n".
+   - End of string '\0' signals the final paragraph is complete.
+ 
+Memory Notes
+-------------
+- Every word, sentence, paragraph and document array must be malloc'd.
+- Sizes are not known in advance - use a counting pass or realloc.
+- Caller is responsible for freeing all allocated memory when done.
+ 
+Functions to Implement
+-----------------------
+- char**** get_document(char* text)
+- char***  kth_paragraph(char**** document, int k)
+- char**   kth_sentence_in_mth_paragraph(char**** document, int k, int m)
+- char*    kth_word_in_mth_sentence_of_nth_paragraph(char**** document, int k, int m, int n)
