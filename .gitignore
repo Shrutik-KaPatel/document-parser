@@ -1,0 +1,12 @@
+# Compiled output
+*.o
+*.out
+a.out
+
+# Executables
+document-parser
+
+# Editor clutter
+.vscode/
+*.swp
+*.DS_Store
