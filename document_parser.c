@@ -49,6 +49,7 @@ char**** get_document(char* text) {
         char* sentence_start = paragraph_start;
         
         int word_count = 1;
+        char *word_start = sentence_start;
         while (*paragraph_start != '.' && *paragraph_start != '\0') {
             if (*paragraph_start == ' ')
                 word_count++;
@@ -58,6 +59,23 @@ char**** get_document(char* text) {
         
         char **words = calloc(word_count, sizeof(char*));
         sentence[j] = words;
+        
+        for (int k = 0; k < word_count; k++)
+        {
+        int letter_count = 1;
+        char* word_begin = word_start;
+        while (*word_start != ' ' && *word_start != '\0') {
+            letter_count++;
+            word_start++;
+        }
+        word_start++;
+        
+        char *letters = calloc(letter_count, sizeof(char));
+        words[k] = letters;
+        strncpy(letters, word_begin, letter_count - 1);
+        letters[letter_count - 1] = '\0';
+        }
+    
     }
     
     
